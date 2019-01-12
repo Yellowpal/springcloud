@@ -1,7 +1,9 @@
 package win.yellowpal.eureka_server.controller;
 
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.amqp.rabbit.listener.ConsumeOkEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,16 +14,36 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/test")
 public class TestController {
 
 	@GetMapping("/json")
-	public String json(){
+	public String json(HttpServletRequest request, HttpServletResponse response){
 		JsonObject object = new JsonObject();
 		object.addProperty("id", 1231321);
 		object.addProperty("name", "测试JSON");
-		
+
+		boolean hasCookies = false;
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				if("token".equals(cookie.getName())){
+					hasCookies = true;
+				}
+			}
+		}
+
+		if(!hasCookies){
+			Cookie cookie = new Cookie("token", UUID.randomUUID().toString());
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+
 		return object.toString();
 	}
 	

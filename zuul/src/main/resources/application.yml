@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: zuul
+  rabbitmq:
+    host: 192.168.43.90
+    port: 5672
+    username: Yellow
+    password: pal
+server:
+  port: 8082
+#自定义路由规则
+#zuul:
+#  routes:
+#    client: # 名字随意
+##      将test服务访问路径映射一份到client
+#      path: /client/**
+#      serviceId: test
+## 允许设置cookie\header
+#  sensitive-headers:
