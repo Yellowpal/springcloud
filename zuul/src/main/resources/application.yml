@@ -17,3 +17,19 @@ server:
 #      serviceId: test
 ## 允许设置cookie\header
 #  sensitive-headers:
+#网关超时配置
+#http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#_zuul_timeouts
+#url访问方式超时配置
+zuul:
+  host:
+    connect-timeout-millis: 4000
+    connection-request-timeout-millis: 4000
+#serviceId访问方式超时配置
+ribbon:
+  ReadTimeout: 4000
+  SocketTimeout: 4000
+#serviceId访问方式超时配置指定特定service
+hystrix:
+  ribbon:
+    ReadTimeout: 3000
+    SocketTimeout: 3000

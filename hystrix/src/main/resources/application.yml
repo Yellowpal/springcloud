@@ -1,0 +1,31 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: hystrix
+  rabbitmq:
+    host: 192.168.43.90
+    port: 5672
+    username: Yellow
+    password: pal
+#服务降级超时配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+    TestController_test: #@HystrixCommand(commandKey = "TestController_test") 配置某一个方法的超时时间
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100
+feign:
+  hystrix:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

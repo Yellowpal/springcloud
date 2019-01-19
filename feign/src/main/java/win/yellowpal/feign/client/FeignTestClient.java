@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
 @FeignClient(value = "test")
 public interface FeignTestClient {
 
