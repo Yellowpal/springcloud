@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.RateLimiter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -12,9 +13,10 @@ import win.yellowpal.zuul.exception.RateLimitException;
 import static com.netflix.zuul.context.RequestContext.getCurrentContext;
 
 @Component
+@Slf4j
 public class RateLimitFilter extends ZuulFilter {
 
-    private static final RateLimiter RATE_LIMITER = RateLimiter.create(1);
+    private static final RateLimiter RATE_LIMITER = RateLimiter.create(1000);
 
     @Override
     public String filterType() {
@@ -40,6 +42,7 @@ public class RateLimitFilter extends ZuulFilter {
             requestContext.setResponseStatusCode(HttpStatus.FORBIDDEN.value());
         }
 
+        log.info("zuul");
         return null;
     }
 }

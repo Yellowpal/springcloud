@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(value = "test", fallback = FeignTestClientFallback.class)
+@FeignClient(value = "zuul", path = "test",fallback = FeignTestClientFallback.class)
 public interface FeignTestClient {
 
     @GetMapping("/test/json")
